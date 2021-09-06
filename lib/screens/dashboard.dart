@@ -365,7 +365,10 @@ class _DashboardState extends State<Dashboard>
                                             child: Image.asset(
                                               
                                               assetsDirectory +
-                                                "VehicleCountIcon.png",color: Theme.of(context).colorScheme.primary,)),
+                                                "VehicleCountIcon.png",
+                                                color: Colors.orange,
+                                                // color: Theme.of(context).colorScheme.primary,
+                                                )),
                                       ),
                                       Column(
                                           crossAxisAlignment:
