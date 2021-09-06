@@ -28,7 +28,7 @@ class MenuTile extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: BRTlightBrown,
                     borderRadius: BorderRadius.circular(10)),
-                child: Image.asset(icon,color: Colors.green,)),
+                child: Image.asset(icon,color: Theme.of(context).colorScheme.primary,)),
             SizedBox(
               width: 10,
             ),
