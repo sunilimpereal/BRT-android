@@ -34,6 +34,9 @@ class FineTicketDao {
     }).toList();
   }
 
+  
+  
+
   Future<List<EntryTicketModel>> getTicketsByDate(DateTime date) async {
     final records = await _entryTicketStore.find(await _db);
     return records
