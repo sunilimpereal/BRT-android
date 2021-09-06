@@ -1,3 +1,4 @@
+import 'package:BRT/widgets/utilityWidgets.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -25,7 +26,9 @@ class IconContainer extends StatelessWidget {
         child: SelectorTile(
           icon: icon,
           title: title,
-          firstWidget: buildRadio(),
+          isSelected: groupValue == value,
+          firstWidget:Container()
+          //  buildRadio(),
         ),
       ),
     );
@@ -45,12 +48,17 @@ class IconContainer extends StatelessWidget {
 
 class SelectorTile extends StatelessWidget {
   const SelectorTile(
-      {Key key, @required this.icon, @required this.title, this.firstWidget})
+      {Key key,
+      @required this.icon,
+      @required this.isSelected,
+      @required this.title,
+      this.firstWidget})
       : super(key: key);
 
   final String icon;
   final String title;
   final Widget firstWidget;
+  final bool isSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -59,15 +67,19 @@ class SelectorTile extends StatelessWidget {
       children: [
         Container(
           decoration: BoxDecoration(
-              color: BRTlightBrown, borderRadius: BorderRadius.circular(12)),
+            color: isSelected ? BrtMediumBrown : BRTlightBrown,
+            borderRadius: BorderRadius.circular(12),
+          ),
           padding: EdgeInsets.all(20),
           child: Center(
               child: Image.asset(
             assetsDirectory + icon,
             height: 80,
             width: 80,
+            color: isSelected ? BrtWhite : null,
           )),
         ),
+        widgetSeperator(),
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -76,6 +88,9 @@ class SelectorTile extends StatelessWidget {
                 child: Text(
               title ?? "",
               textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 12,
+              fontWeight: isSelected?FontWeight.bold:FontWeight.normal
+              ),
             )),
           ],
         ),
@@ -98,10 +113,12 @@ class BRTCheckBox extends StatelessWidget {
       child: SelectorTile(
         icon: icon,
         title: title,
-        firstWidget: Checkbox(
-          value: isSelected,
-          onChanged: (x) => onChanged,
-        ),
+        isSelected: isSelected,
+        firstWidget:Container()
+        //  Checkbox(
+        //   value: isSelected,
+        //   onChanged: (x) => onChanged,
+        // ),
       ),
     );
   }

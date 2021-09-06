@@ -13,9 +13,11 @@ class BrtButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: onPressed,
-      child: Container(
+      borderRadius: BorderRadius.circular(8),
+      highlightColor: buttonColor.withOpacity(0.6),
+      child: Ink(
         padding: EdgeInsets.symmetric(horizontal: 60, vertical: 15),
         decoration: BoxDecoration(
             color: buttonColor, borderRadius: BorderRadius.circular(8)),

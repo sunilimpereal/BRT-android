@@ -194,6 +194,15 @@ class _FineTicketState extends State<FineTicket> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Brtblack,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
         elevation: 0,
       ),
       body: _isLoading
@@ -210,6 +219,11 @@ class _FineTicketState extends State<FineTicket> {
                         entryTimeController: entryTimeController,
                         ticketNumberController: ticketNumberController,
                         checkPointController: checkPointController),
+
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.05,
+                    ),
+
                     VehicleNumberSection(
                         onSelected: (value) {
                           selectedState = statess.keys.firstWhere(
@@ -221,6 +235,9 @@ class _FineTicketState extends State<FineTicket> {
                         districtNumberController: districtNumberController,
                         letterController: letterController,
                         uniqueNumberController: uniqueNumberController),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.04,
+                    ),
                     VehicleSelectionSection(
                       vehicleType: vehicleType,
                       onChanged: (value) {
@@ -323,6 +340,7 @@ class _FineTicketState extends State<FineTicket> {
                         ),
                         widgetSeperator(),
                         BrtFormField(
+                          icon: Icons.payments,
                           textInputType: TextInputType.number,
                           title: "Fine amount",
                           controller: fineController,

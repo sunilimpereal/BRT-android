@@ -13,6 +13,7 @@ class BrtFormField extends StatefulWidget {
   final List<TextInputFormatter> inputFormatter;
   final TextCapitalization capitalization;
   final int maxLength;
+  final IconData icon;
 
   BrtFormField(
       {@required this.title,
@@ -22,6 +23,7 @@ class BrtFormField extends StatefulWidget {
       this.textInputType,
       this.capitalization,
       this.maxLength,
+      this.icon,
       this.validator,
       this.inputFormatter,
       this.isObsecure = false});
@@ -53,6 +55,7 @@ class _BrtFormFieldState extends State<BrtFormField> {
               isReadOnly: widget.isReadOnly,
               isObsecure: widget.isObsecure,
               maxLength: widget.maxLength,
+              icon: widget.icon,
             )
           ],
         ),

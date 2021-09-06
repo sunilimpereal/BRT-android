@@ -55,16 +55,19 @@ class _TicketInformationSectionState extends State<TicketInformationSection> {
           height: 20,
         ),
         BrtFormField(
+          icon: Icons.date_range,
           title: "Date",
           controller: widget.dateController,
           isReadOnly: true,
         ),
         BrtFormField(
+          icon: Icons.watch_later_outlined,
           title: "Entry time",
           controller: widget.entryTimeController,
           isReadOnly: true,
         ),
         BrtFormField(
+          icon: Icons.confirmation_num,
           title: "Ticket Number",
           controller: widget.ticketNumberController,
           isReadOnly: true,

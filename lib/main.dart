@@ -77,11 +77,21 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-              accentColor: BRTbrown,
+              colorScheme: ThemeData().colorScheme.copyWith(
+                    secondary: Colors.green,
+                    primary: Colors.green
+                  ),
+              iconTheme: IconThemeData(color: Colors.green),
               scaffoldBackgroundColor: BrtWhite,
               primaryTextTheme: TextTheme(),
               primaryColor: BrtWhite,
               fontFamily: "Montserrat",
+              highlightColor: Colors.green.withOpacity(0.7),
+              splashColor: Colors.green,
+              outlinedButtonTheme: OutlinedButtonThemeData(
+                  style: OutlinedButton.styleFrom(
+                primary: Colors.green,
+              )),
               cursorColor: BRTbrown),
           onGenerateRoute: router.generateRoute,
           initialRoute: "/"),

@@ -362,8 +362,10 @@ class _DashboardState extends State<Dashboard>
                                                 color: BrtMediumBrown,
                                                 borderRadius:
                                                     BorderRadius.circular(10)),
-                                            child: Image.asset(assetsDirectory +
-                                                "VehicleCountIcon.png")),
+                                            child: Image.asset(
+                                              
+                                              assetsDirectory +
+                                                "VehicleCountIcon.png",color: Colors.green,)),
                                       ),
                                       Column(
                                           crossAxisAlignment:
@@ -401,32 +403,34 @@ class _DashboardState extends State<Dashboard>
                                         child: Image.asset(
                                           assetsDirectory + "NextIcon.png",
                                           scale: 0.6,
+                                          
                                         ),
                                       ),
                                     ))
                               ]),
                               widgetSeperator(),
-                              MenuTile(
-                                title: "Make entry ticket",
-                                subtitle: snapshot.data.entryTickets +
-                                    " entry tickets made",
-                                buttonText: "Add",
-                                icon: assetsDirectory + "EntryTicketIcon.png",
-                                onPressed: () async {
-                                  try {
-                                    await Navigator.pushNamed(
-                                            context, EntryTicketRoute)
-                                        .timeout(TimeOutDuration);
-                                    if (isDeviceOnline) {
-                                      syncDataWithBackEnd();
-                                    } else {
-                                      initLocalSync();
-                                    }
-                                  } on TimeoutException catch (_) {
-                                    print(_);
-                                  }
-                                },
-                              ),
+                              widgetSeperator(),
+                              // MenuTile(
+                              //   title: "Make entry ticket",
+                              //   subtitle: snapshot.data.entryTickets +
+                              //       " entry tickets made",
+                              //   buttonText: "Add",
+                              //   icon: assetsDirectory + "EntryTicketIcon.png",
+                              //   onPressed: () async {
+                              //     try {
+                              //       await Navigator.pushNamed(
+                              //               context, EntryTicketRoute)
+                              //           .timeout(TimeOutDuration);
+                              //       if (isDeviceOnline) {
+                              //         syncDataWithBackEnd();
+                              //       } else {
+                              //         initLocalSync();
+                              //       }
+                              //     } on TimeoutException catch (_) {
+                              //       print(_);
+                              //     }
+                              //   },
+                              // ),
                               MenuTile(
                                 title: "Make fine ticket",
                                 subtitle: snapshot.data.fineTickets +
@@ -448,39 +452,39 @@ class _DashboardState extends State<Dashboard>
                                   }
                                 },
                               ),
-                              MenuTile(
-                                  title: "Scan a ticket",
-                                  subtitle: "Scan for exit or fine",
-                                  buttonText: "Scan",
-                                  icon: assetsDirectory + "ScanIcon.png",
-                                  onPressed: () async {
-                                    String barCodeResult = //"37";
-                                        await FlutterBarcodeScanner.scanBarcode(
-                                            "#ff6666",
-                                            "Cancel",
-                                            true,
-                                            ScanMode.DEFAULT);
-                                    if (barCodeResult != null &&
-                                        barCodeResult != "-1") {
-                                      final qrInfo = getQrInfo(barCodeResult);
-                                      Navigator.pushNamed(
-                                          context, TicketInfoRoute,
-                                          arguments: TicketInfoArguments(
-                                              ticket: qrInfo));
-                                    }
-                                  }),
-                              GestureDetector(
-                                  onTap: () async {
-                                    await Navigator.pushNamed(
-                                        context, TicketHistoryRoute,
-                                        arguments: false);
-                                    if (isDeviceOnline) {
-                                      syncDataWithBackEnd();
-                                    } else {
-                                      initLocalSync();
-                                    }
-                                  },
-                                  child: UnderLineButton("View all tickets")),
+                              // MenuTile(
+                              //     title: "Scan a ticket",
+                              //     subtitle: "Scan for exit or fine",
+                              //     buttonText: "Scan",
+                              //     icon: assetsDirectory + "ScanIcon.png",
+                              //     onPressed: () async {
+                              //       String barCodeResult = //"37";
+                              //           await FlutterBarcodeScanner.scanBarcode(
+                              //               "#ff6666",
+                              //               "Cancel",
+                              //               true,
+                              //               ScanMode.DEFAULT);
+                              //       if (barCodeResult != null &&
+                              //           barCodeResult != "-1") {
+                              //         final qrInfo = getQrInfo(barCodeResult);
+                              //         Navigator.pushNamed(
+                              //             context, TicketInfoRoute,
+                              //             arguments: TicketInfoArguments(
+                              //                 ticket: qrInfo));
+                              //       }
+                              //     }),
+                              // GestureDetector(
+                              //     onTap: () async {
+                              //       await Navigator.pushNamed(
+                              //           context, TicketHistoryRoute,
+                              //           arguments: false);
+                              //       if (isDeviceOnline) {
+                              //         syncDataWithBackEnd();
+                              //       } else {
+                              //         initLocalSync();
+                              //       }
+                              //     },
+                              //     child: UnderLineButton("View all tickets")),
                             ],
                           ),
                         );

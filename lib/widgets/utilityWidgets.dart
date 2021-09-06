@@ -25,6 +25,7 @@ class BrtTextField extends StatefulWidget {
   final TextCapitalization capitalization;
   final List<TextInputFormatter> inputFormatter;
   final Function(String) validator;
+  final IconData icon;
   BrtTextField(
       {this.hintText,
       @required this.controller,
@@ -34,6 +35,7 @@ class BrtTextField extends StatefulWidget {
       this.validator,
       this.capitalization,
       this.inputFormatter,
+      this.icon,
       this.isObsecure = false});
 
   @override
@@ -51,6 +53,7 @@ class _BrtTextFieldState extends State<BrtTextField> {
       keyboardType: widget.keyboardType ?? TextInputType.text,
       obscureText: widget.isObsecure,
       maxLength: widget.maxLength,
+      autovalidate: false,
       maxLengthEnforced: true,
       textCapitalization: widget.capitalization,
       validator: (String text) {
@@ -62,12 +65,14 @@ class _BrtTextFieldState extends State<BrtTextField> {
       },
       cursorColor: BRTbrown,
       decoration: InputDecoration(
-          labelStyle: TextStyle(fontSize: 12, color: BRTbrown),
-          focusColor: BRTbrown,
-          fillColor: BRTlightBrown,
-          hintText: widget.hintText ?? "",
-          filled: true,
-          border: InputBorder.none),
+        prefixIcon: widget.icon != null ? Icon(widget.icon) : null,
+        labelStyle: TextStyle(fontSize: 12, color: BRTbrown),
+        focusColor: BRTbrown,
+        fillColor: BRTlightBrown,
+        hintText: widget.hintText ?? "",
+        filled: true,
+        border: InputBorder.none,
+      ),
     );
   }
 }

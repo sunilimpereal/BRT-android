@@ -1,6 +1,7 @@
 import 'package:BRT/screens/entryTicket.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 //utility Contants
 const BackendBaseUrl = "https://brt.codemonk.in/api/v1/";
@@ -12,6 +13,7 @@ const BRTlightBrown = Color(0xFFF8F8F7);
 const GlobalScreenPadding = EdgeInsets.all(12);
 const BrtWhite = Colors.white;
 const Brtblack = Colors.black;
+const Brtgrey = Colors.blueGrey;
 const BrtSubtitleColor = Color(0xFF3C484F);
 const BrtGreen = Color(0xFF3CAB94);
 const BrtGray = Color(0xFF919893);
@@ -35,6 +37,7 @@ const headingTextStyle = TextStyle(
     color: BRTbrown,
     fontFamily: "Montserrat",
     fontWeight: FontWeight.w700);
-const SubHeadingTextStyle = TextStyle(fontSize: 17, color: BRTbrown);
+const SubHeadingTextStyle =
+    TextStyle(fontSize: 19, color: Brtblack, fontWeight: FontWeight.w600);
 
 const TimeOutDuration = Duration(seconds: 2);

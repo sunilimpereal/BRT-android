@@ -28,7 +28,7 @@ class MenuTile extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: BRTlightBrown,
                     borderRadius: BorderRadius.circular(10)),
-                child: Image.asset(icon)),
+                child: Image.asset(icon,color: Colors.green,)),
             SizedBox(
               width: 10,
             ),
@@ -45,10 +45,15 @@ class MenuTile extends StatelessWidget {
             ]),
           ],
         ),
-        BrtSecondaryButton(
-          buttonText: buttonText,
+
+        OutlinedButton(
           onPressed: onPressed,
-        )
+            
+           child: Text('$buttonText'))
+        // BrtSecondaryButton(
+        //   buttonText: buttonText,
+        //   onPressed: onPressed,
+        // )
       ]),
     );
   }

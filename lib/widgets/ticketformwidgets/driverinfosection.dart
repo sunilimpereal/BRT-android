@@ -26,6 +26,7 @@ class DriverDetailsSection extends StatelessWidget {
         widgetSeperator(),
         BrtFormField(
             title: "Driver Name",
+              icon: Icons.person,
             controller: driverNameController,
             validator: (string) {
               if (string.isEmpty) {
@@ -35,6 +36,7 @@ class DriverDetailsSection extends StatelessWidget {
         BrtFormField(
             textInputType: TextInputType.phone,
             title: "Mobile Number",
+              icon: Icons.call,
             maxLength: 10,
             validator: (string) {
               if (string.isEmpty) {
