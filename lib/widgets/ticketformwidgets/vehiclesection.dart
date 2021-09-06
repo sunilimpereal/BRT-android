@@ -24,28 +24,24 @@ class VehicleSelectionSection extends StatelessWidget {
         ),
         widgetSeperator(),
         Container(
-          width: double.infinity,
-          child: GridView.count(
-            crossAxisCount: 3,
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            childAspectRatio: (MediaQuery.of(context).size.width /
-                    MediaQuery.of(context).size.height) *
-                1.2,
-            children: List.generate(
-                vehicles.length,
-                (index) => Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: IconContainer(
-                        title: vehicles[index],
-                        groupValue: vehicleType,
-                        icon: vehicleIcons[index],
-                        value: vehicles[index],
-                        onChnaged: (x) => onChanged(x),
-                      ),
-                    )),
-          ),
-        )
+            width: MediaQuery.of(context).size.width,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: List.generate(
+                    vehicles.length,
+                    (index) => Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: IconContainer(
+                            title: vehicles[index],
+                            groupValue: vehicleType,
+                            icon: vehicleIcons[index],
+                            value: vehicles[index],
+                            onChnaged: (x) => onChanged(x),
+                          ),
+                        )),
+              ),
+            )),
       ],
     );
   }

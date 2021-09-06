@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:BRT/constants.dart';
 import 'package:BRT/models/entryTicket.dart';
 import 'package:BRT/models/fine.dart';
-import 'package:BRT/models/states.dart';
+
 import 'package:BRT/models/vehicle.dart';
 import 'package:BRT/services/printer.dart';
 import 'package:BRT/services/utilityFunctions.dart';
@@ -17,7 +17,7 @@ import 'package:BRT/widgets/ticketformwidgets/driverinfosection.dart';
 import 'package:BRT/widgets/ticketformwidgets/vehiclenumbersection.dart';
 import 'package:BRT/widgets/ticketformwidgets/vehiclesection.dart';
 import 'package:BRT/widgets/utilityWidgets.dart';
-import 'package:connectivity/connectivity.dart';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -130,7 +130,8 @@ class _FineTicketState extends State<FineTicket> {
       setState(() {
         _isLoading = false;
       });
-      Navigator.pop(context);
+      showSnackbar(_scaffoldKey, "Ticket Generated");
+      // Navigator.pop(context);
 
       // final List a = await dao.getAllEntryTickets();
       // for (var ticket in a) {
@@ -209,7 +210,7 @@ class _FineTicketState extends State<FineTicket> {
           ? Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
               child: Container(
-                padding: GlobalScreenPadding,
+                padding: GlobalScreenPadding.copyWith(top: 0),
                 child: Column(
                   children: [
                     TicketInformationSection(
@@ -219,11 +220,9 @@ class _FineTicketState extends State<FineTicket> {
                         entryTimeController: entryTimeController,
                         ticketNumberController: ticketNumberController,
                         checkPointController: checkPointController),
-
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.05,
+                      height: MediaQuery.of(context).size.height * 0.02,
                     ),
-
                     VehicleNumberSection(
                         onSelected: (value) {
                           selectedState = statess.keys.firstWhere(
@@ -236,7 +235,7 @@ class _FineTicketState extends State<FineTicket> {
                         letterController: letterController,
                         uniqueNumberController: uniqueNumberController),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.04,
+                      height: MediaQuery.of(context).size.height * 0.02,
                     ),
                     VehicleSelectionSection(
                       vehicleType: vehicleType,
@@ -245,32 +244,16 @@ class _FineTicketState extends State<FineTicket> {
                         setState(() {});
                       },
                     ),
-                    // Wrap(
-                    //   children: [
-                    //     FilterChip(
-                    //       shape: RoundedRectangleBorder(
-                    //           borderRadius: BorderRadius.circular(10)),
-                    //       padding: EdgeInsets.symmetric(
-                    //           vertical: 10, horizontal: 10),
-                    //       label: Column(
-                    //         children: [
-                    //           Image.asset(assetsDirectory + fineIcons[0]),
-                    //           Padding(
-                    //             padding: const EdgeInsets.all(8.0),
-                    //             child: Text("OverStaying"),
-                    //           ),
-                    //         ],
-                    //       ),
-                    //       onSelected: (isSelected) {},
-                    //     )
-                    //   ],
-                    // ),
-
+                    widgetSeperator(),
                     DriverDetailsSection(
                         driverNameController: driverNameController,
                         driverMobileController: driverMobileController),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.02,
+                    ),
                     Container(
-                      width: double.infinity,
+                      // height: 300,
+
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -279,54 +262,44 @@ class _FineTicketState extends State<FineTicket> {
                             style: SubHeadingTextStyle,
                           ),
                           widgetSeperator(),
-                          GridView.count(
-                            crossAxisCount: 3,
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height * 0.23,
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: List.generate(
+                                    fines.length,
+                                    (index) => Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: BRTCheckBox(
+                                            icon: fineIcons[index],
+                                            isSelected:
+                                                violationCheckStatus[index],
+                                            onChanged: (isSelected) {
+                                              if (isSelected) {}
+                                              setState(() {
+                                                violationCheckStatus[index] =
+                                                    isSelected ? false : true;
+                                                String selected = fineID[fines
+                                                        .indexOf(fines[index])]
+                                                    .toString();
 
-                            childAspectRatio:
-                                (MediaQuery.of(context).size.width /
-                                    MediaQuery.of(context).size.height),
-
-                            //crossAxisAlignment: WrapCrossAlignment.start,
-                            children: List.generate(
-                                fines.length,
-                                (index) => Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: BRTCheckBox(
-                                        icon: fineIcons[index],
-                                        isSelected: violationCheckStatus[index],
-                                        onChanged: (isSelected) {
-                                          if (isSelected) {}
-                                          setState(() {
-                                            violationCheckStatus[index] =
-                                                isSelected ? false : true;
-                                            String selected = fineID[
-                                                    fines.indexOf(fines[index])]
-                                                .toString();
-
-                                            if (selectedViolations
-                                                .contains(selected)) {
-                                              selectedViolations
-                                                  .remove(selected);
-                                            } else {
-                                              selectedViolations.add(selected);
-                                            }
-                                          });
-                                        },
-                                        title: fines[index],
-                                      ),
-                                      // child: IconContainer(
-                                      //   title: fines[index],
-                                      //   groupValue: selectedFine,
-                                      //   icon: fineIcons[index],
-                                      //   value: fines[index],
-                                      //   onChnaged: (value) {
-                                      //     selectedFine = value;
-                                      //     setState(() {});
-                                      //   },
-                                      // ),
-                                    )),
+                                                if (selectedViolations
+                                                    .contains(selected)) {
+                                                  selectedViolations
+                                                      .remove(selected);
+                                                } else {
+                                                  selectedViolations
+                                                      .add(selected);
+                                                }
+                                              });
+                                            },
+                                            title: fines[index],
+                                          ),
+                                        )),
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -344,8 +317,11 @@ class _FineTicketState extends State<FineTicket> {
                           textInputType: TextInputType.number,
                           title: "Fine amount",
                           controller: fineController,
-                        )
+                        ),
                       ],
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.02,
                     ),
                     BrtButton(
                         title: "Save & Print Ticket", onPressed: saveFineTicket)
@@ -356,42 +332,3 @@ class _FineTicketState extends State<FineTicket> {
     );
   }
 }
-
-// class BRTRadios extends StatelessWidget {
-//   BRTRadios({this.onChanged, this.titleList, this.iconList, this.groupValue});
-
-//   final Function onChanged;
-//   final dynamic groupValue;
-//   final List<String> titleList;
-//   final List<String> iconList;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Wrap(
-//       children: List.generate(
-//         titleList.length,
-//         (index) => Column(
-//           children: [
-//             Container(
-//               child: Column(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: [
-//                   Image.asset(assetsDirectory + iconList[index]),
-//                   Row(
-//                     children: [
-//                       Radio(
-//                           value: titleList[index],
-//                           groupValue: groupValue,
-//                           onChanged: onChanged),
-//                       Expanded(child: Text(titleList[index])),
-//                     ],
-//                   ),
-//                 ],
-//               ),
-//             )
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

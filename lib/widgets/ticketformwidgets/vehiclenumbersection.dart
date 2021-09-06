@@ -50,14 +50,11 @@ class _VehicleNumberSectionState extends State<VehicleNumberSection> {
     return Column(
       key: widget.key,
       crossAxisAlignment: CrossAxisAlignment.start,
-       textBaseline: TextBaseline.alphabetic,
+      textBaseline: TextBaseline.alphabetic,
       children: [
         Text(
           "Vehicle number",
           style: SubHeadingTextStyle,
-        ),
-        SizedBox(
-          height: 10,
         ),
         Column(
           children: [
@@ -70,7 +67,7 @@ class _VehicleNumberSectionState extends State<VehicleNumberSection> {
             Container(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.baseline,
-                 textBaseline: TextBaseline.alphabetic,
+                textBaseline: TextBaseline.alphabetic,
                 children: [
                   Expanded(
                     flex: 3,

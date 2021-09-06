@@ -28,10 +28,7 @@ class MenuTile extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: BRTlightBrown,
                     borderRadius: BorderRadius.circular(10)),
-                child: Image.asset(icon,
-                color: Colors.orange,
-                // color: Theme.of(context).colorScheme.primary,
-                )),
+                child: Image.asset(icon,color: Theme.of(context).colorScheme.primary,)),
             SizedBox(
               width: 10,
             ),
@@ -49,7 +46,7 @@ class MenuTile extends StatelessWidget {
           ],
         ),
 
-        OutlinedButton(
+        ElevatedButton(
           onPressed: onPressed,
             
            child: Text('$buttonText'))

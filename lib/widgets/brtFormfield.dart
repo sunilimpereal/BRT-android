@@ -36,14 +36,14 @@ class _BrtFormFieldState extends State<BrtFormField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       child: Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             BRTfieldhead(widget.title),
             SizedBox(
-              height: 10,
+              height: 8,
             ),
             BrtTextField(
               capitalization: widget.capitalization ?? TextCapitalization.none,

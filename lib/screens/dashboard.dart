@@ -345,72 +345,69 @@ class _DashboardState extends State<Dashboard>
                                     ? Text("Last Sync at $lastSyncTime")
                                     : Container(),
                               ),
-                              Stack(children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: BRTbrown,
-                                  ),
-                                  padding: GlobalScreenPadding,
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Container(
-                                            padding: EdgeInsets.all(10),
-                                            decoration: BoxDecoration(
-                                                color: BrtMediumBrown,
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
-                                            child: Image.asset(
+                              // Stack(children: [
+                              //   Container(
+                              //     decoration: BoxDecoration(
+                              //       borderRadius: BorderRadius.circular(10),
+                              //       color: BRTbrown,
+                              //     ),
+                              //     padding: GlobalScreenPadding,
+                              //     child: Row(
+                              //       children: [
+                              //         Padding(
+                              //           padding: const EdgeInsets.all(8.0),
+                              //           child: Container(
+                              //               padding: EdgeInsets.all(10),
+                              //               decoration: BoxDecoration(
+                              //                   color: BrtMediumBrown,
+                              //                   borderRadius:
+                              //                       BorderRadius.circular(10)),
+                              //               child: Image.asset(
                                               
-                                              assetsDirectory +
-                                                "VehicleCountIcon.png",
-                                                color: Colors.orange,
-                                                // color: Theme.of(context).colorScheme.primary,
-                                                )),
-                                      ),
-                                      Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              snapshot.data.vehicleInside ?? "",
-                                              style: TextStyle(
-                                                  fontSize: 35,
-                                                  color: BrtWhite),
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  "Vehicles Inside",
-                                                  style: TextStyle(
-                                                      color: BrtWhite),
-                                                ),
-                                              ],
-                                            )
-                                          ])
-                                    ],
-                                  ),
-                                ),
-                                Positioned(
-                                    bottom: 10,
-                                    right: 10,
-                                    child: GestureDetector(
-                                      onTap: onVehicleCardTapped,
-                                      child: Container(
-                                        padding: EdgeInsets.all(10),
-                                        child: Image.asset(
-                                          assetsDirectory + "NextIcon.png",
-                                          scale: 0.6,
+                              //                 assetsDirectory +
+                              //                   "VehicleCountIcon.png",color: Theme.of(context).colorScheme.primary,)),
+                              //         ),
+                              //         Column(
+                              //             crossAxisAlignment:
+                              //                 CrossAxisAlignment.start,
+                              //             children: [
+                              //               Text(
+                              //                 snapshot.data.vehicleInside ?? "",
+                              //                 style: TextStyle(
+                              //                     fontSize: 35,
+                              //                     color: BrtWhite),
+                              //               ),
+                              //               Row(
+                              //                 mainAxisAlignment:
+                              //                     MainAxisAlignment
+                              //                         .spaceBetween,
+                              //                 children: [
+                              //                   Text(
+                              //                     "Vehicles Inside",
+                              //                     style: TextStyle(
+                              //                         color: BrtWhite),
+                              //                   ),
+                              //                 ],
+                              //               )
+                              //             ])
+                              //       ],
+                              //     ),
+                              //   ),
+                              //   Positioned(
+                              //       bottom: 10,
+                              //       right: 10,
+                              //       child: GestureDetector(
+                              //         onTap: onVehicleCardTapped,
+                              //         child: Container(
+                              //           padding: EdgeInsets.all(10),
+                              //           child: Image.asset(
+                              //             assetsDirectory + "NextIcon.png",
+                              //             scale: 0.6,
                                           
-                                        ),
-                                      ),
-                                    ))
-                              ]),
+                              //           ),
+                              //         ),
+                              //       ))
+                              // ]),
                               widgetSeperator(),
                               widgetSeperator(),
                               // MenuTile(

@@ -46,32 +46,30 @@ class _TicketInformationSectionState extends State<TicketInformationSection> {
           widget.title ?? "Enter entry ticket details",
           style: headingTextStyle,
         ),
-        widgetSeperator(),
         Text(
           "Ticket information",
           style: SubHeadingTextStyle,
         ),
-        SizedBox(
-          height: 20,
-        ),
-        BrtFormField(
-          icon: Icons.date_range,
-          title: "Date",
-          controller: widget.dateController,
-          isReadOnly: true,
-        ),
-        BrtFormField(
-          icon: Icons.watch_later_outlined,
-          title: "Entry time",
-          controller: widget.entryTimeController,
-          isReadOnly: true,
-        ),
-        BrtFormField(
-          icon: Icons.confirmation_num,
-          title: "Ticket Number",
-          controller: widget.ticketNumberController,
-          isReadOnly: true,
-        ),
+        widgetSeperator(),
+        display(),
+        // BrtFormField(
+        //   icon: Icons.date_range,
+        //   title: "Date",
+        //   controller: widget.dateController,
+        //   isReadOnly: true,
+        // ),
+        // BrtFormField(
+        //   icon: Icons.watch_later_outlined,
+        //   title: "Entry time",
+        //   controller: widget.entryTimeController,
+        //   isReadOnly: true,
+        // ),
+        // BrtFormField(
+        //   icon: Icons.confirmation_num,
+        //   title: "Ticket Number",
+        //   controller: widget.ticketNumberController,
+        //   isReadOnly: true,
+        // ),
         !widget.isFineScreen
             ? BRTDropDownMenu(
                 items: widget.objectList.values.toList(),
@@ -81,6 +79,37 @@ class _TicketInformationSectionState extends State<TicketInformationSection> {
               )
             : Container()
       ],
+    );
+  }
+
+  Widget display() {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.confirmation_num),
+                SizedBox(width: 5,),
+                Text("${widget.ticketNumberController.text}",style: TextStyle(
+                  fontWeight:FontWeight.bold,
+                  fontSize: 16,
+                ),),
+              ],
+            ),
+            Column(
+              children: [
+                Text("${widget.dateController.text}"),
+                Text("${widget.entryTimeController.text}"),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

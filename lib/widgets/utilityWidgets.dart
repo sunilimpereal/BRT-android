@@ -70,6 +70,7 @@ class _BrtTextFieldState extends State<BrtTextField> {
         focusColor: BRTbrown,
         fillColor: BRTlightBrown,
         hintText: widget.hintText ?? "",
+        
         filled: true,
         border: InputBorder.none,
       ),
