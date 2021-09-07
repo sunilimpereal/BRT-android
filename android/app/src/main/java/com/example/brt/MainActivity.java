@@ -286,7 +286,7 @@ public class MainActivity extends FlutterActivity {
                 mPrinter.printTextLine("Phone Number  : " + phoneNumber + "\n");
                 mPrinter.printTextLine("Ticket Number : " + number + "\n");
                 mPrinter.printTextLine("Entry Time    : " + time + "\n");
-                mPrinter.printTextLine("Ticket Number : " + number + "\n");
+                // mPrinter.printTextLine("Ticket Number : " + number + "\n");
                 mPrinter.printTextLine("Check Post    : " + checkPost + "\n");
                 mPrinter.printTextLine("Violation     : " + violation + "\n");
                 mPrinter.printTextLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");

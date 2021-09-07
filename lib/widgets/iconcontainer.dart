@@ -24,12 +24,12 @@ class IconContainer extends StatelessWidget {
       child: GestureDetector(
         onTap: () => onChnaged(title),
         child: SelectorTile(
-          icon: icon,
-          title: title,
-          isSelected: groupValue == value,
-          firstWidget:Container()
-          //  buildRadio(),
-        ),
+            icon: icon,
+            title: title,
+            isSelected: groupValue == value,
+            firstWidget: Container()
+            //  buildRadio(),
+            ),
       ),
     );
   }
@@ -88,9 +88,9 @@ class SelectorTile extends StatelessWidget {
                 child: Text(
               title ?? "",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 12,
-              fontWeight: isSelected?FontWeight.bold:FontWeight.normal
-              ),
+              style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal),
             )),
           ],
         ),
@@ -110,19 +110,19 @@ class BRTCheckBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 100,
-     
+      height: 180,
       child: GestureDetector(
         onTap: () => onChanged(isSelected),
         child: SelectorTile(
-          icon: icon,
-          title: title,
-          isSelected: isSelected,
-          firstWidget:Container()
-          //  Checkbox(
-          //   value: isSelected,
-          //   onChanged: (x) => onChanged,
-          // ),
-        ),
+            icon: icon,
+            title: title,
+            isSelected: isSelected,
+            firstWidget: Container()
+            //  Checkbox(
+            //   value: isSelected,
+            //   onChanged: (x) => onChanged,
+            // ),
+            ),
       ),
     );
   }

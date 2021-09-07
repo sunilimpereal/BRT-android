@@ -43,8 +43,13 @@ class BrtTextField extends StatefulWidget {
 }
 
 class _BrtTextFieldState extends State<BrtTextField> {
+  bool fine = false;
+
   @override
   Widget build(BuildContext context) {
+    if (widget.icon == Icons.payments) {
+      fine = true;
+    }
     return TextFormField(
       autovalidateMode: AutovalidateMode.always,
       inputFormatters: widget.inputFormatter,
@@ -65,14 +70,26 @@ class _BrtTextFieldState extends State<BrtTextField> {
       },
       cursorColor: BRTbrown,
       decoration: InputDecoration(
-        prefixIcon: widget.icon != null ? Icon(widget.icon) : null,
+        prefixIcon:
+            !fine ? (widget.icon != null ? Icon(widget.icon) : null) : rupee(),
         labelStyle: TextStyle(fontSize: 12, color: BRTbrown),
         focusColor: BRTbrown,
         fillColor: BRTlightBrown,
         hintText: widget.hintText ?? "",
-        
         filled: true,
         border: InputBorder.none,
+      ),
+    );
+  }
+
+  Widget rupee() {
+    return Container(
+      width: 20,
+      color: Colors.grey.shade100,
+      alignment: Alignment.center,
+      child: Text(
+        '₹',
+        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 22),
       ),
     );
   }

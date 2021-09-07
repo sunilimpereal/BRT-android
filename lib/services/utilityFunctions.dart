@@ -30,7 +30,7 @@ String getViolationById(int id) {
 }
 
 Future<String> getTicketNumber() async {
-  String ticketNumber = "BRT" + userId.toString();
+  String ticketNumber = "NTR" + userId.toString();
   var ran = Random();
   SharedPreferences preferences = await SharedPreferences.getInstance();
   int number = preferences.getInt('ticketNumber');

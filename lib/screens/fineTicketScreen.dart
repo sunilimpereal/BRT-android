@@ -30,6 +30,9 @@ class FineTicket extends StatefulWidget {
 }
 
 class _FineTicketState extends State<FineTicket> {
+  ScrollController scrollController = ScrollController();
+  int sc = 0;
+
   GlobalKey _scaffoldKey = GlobalKey<ScaffoldState>();
 
   TicketViewModel ticketVM;
@@ -87,6 +90,20 @@ class _FineTicketState extends State<FineTicket> {
   @override
   void initState() {
     initializeValues();
+    scrollController.addListener(() {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        setState(() {
+          sc = 1;
+        });
+      }
+      if (scrollController.position.pixels ==
+          scrollController.position.minScrollExtent) {
+        setState(() {
+          sc = 0;
+        });
+      }
+    });
     super.initState();
   }
 
@@ -189,6 +206,7 @@ class _FineTicketState extends State<FineTicket> {
   }
 
   Printer printer;
+
   @override
   Widget build(BuildContext context) {
     printer = Printer();
@@ -245,15 +263,8 @@ class _FineTicketState extends State<FineTicket> {
                       },
                     ),
                     widgetSeperator(),
-                    DriverDetailsSection(
-                        driverNameController: driverNameController,
-                        driverMobileController: driverMobileController),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.02,
-                    ),
                     Container(
-                      // height: 300,
-
+                      width: MediaQuery.of(context).size.width,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -262,47 +273,87 @@ class _FineTicketState extends State<FineTicket> {
                             style: SubHeadingTextStyle,
                           ),
                           widgetSeperator(),
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height * 0.23,
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: List.generate(
-                                    fines.length,
-                                    (index) => Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: BRTCheckBox(
-                                            icon: fineIcons[index],
-                                            isSelected:
-                                                violationCheckStatus[index],
-                                            onChanged: (isSelected) {
-                                              if (isSelected) {}
-                                              setState(() {
-                                                violationCheckStatus[index] =
-                                                    isSelected ? false : true;
-                                                String selected = fineID[fines
-                                                        .indexOf(fines[index])]
-                                                    .toString();
+                          Stack(
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                // height:
+                                //     MediaQuery.of(context).size.height * 0.23,
+                                child: SingleChildScrollView(
+                                  controller: scrollController,
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children: List.generate(
+                                        fines.length,
+                                        (index) => Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: BRTCheckBox(
+                                                icon: fineIcons[index],
+                                                isSelected:
+                                                    violationCheckStatus[index],
+                                                onChanged: (isSelected) {
+                                                  if (isSelected) {}
+                                                  setState(() {
+                                                    violationCheckStatus[
+                                                            index] =
+                                                        isSelected
+                                                            ? false
+                                                            : true;
+                                                    String selected = fineID[
+                                                            fines.indexOf(
+                                                                fines[index])]
+                                                        .toString();
 
-                                                if (selectedViolations
-                                                    .contains(selected)) {
-                                                  selectedViolations
-                                                      .remove(selected);
-                                                } else {
-                                                  selectedViolations
-                                                      .add(selected);
-                                                }
-                                              });
-                                            },
-                                            title: fines[index],
-                                          ),
-                                        )),
+                                                    if (selectedViolations
+                                                        .contains(selected)) {
+                                                      selectedViolations
+                                                          .remove(selected);
+                                                    } else {
+                                                      selectedViolations
+                                                          .add(selected);
+                                                    }
+                                                  });
+                                                },
+                                                title: fines[index],
+                                              ),
+                                            )),
+                                  ),
+                                ),
                               ),
-                            ),
+                              Row(
+                                mainAxisAlignment: sc == 0
+                                    ? MainAxisAlignment.end
+                                    : MainAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      color: Colors.white.withOpacity(0.2),
+                                      height: 120,
+                                      width: 30,
+                                      child: Center(
+                                          child: Icon(
+                                        sc == 1
+                                            ? Icons.arrow_back_ios
+                                            : Icons.arrow_forward_ios,
+                                        size: 40,
+                                        color: Colors.green.withOpacity(0.3),
+                                      )),
+                                    ),
+                                  )
+                                ],
+                              )
+                            ],
                           ),
                         ],
                       ),
+                    ),
+                    DriverDetailsSection(
+                        driverNameController: driverNameController,
+                        driverMobileController: driverMobileController),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.02,
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
