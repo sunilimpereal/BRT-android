@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:BRT/constants.dart';
 import 'package:BRT/models/entryTicket.dart';
@@ -19,6 +20,8 @@ import 'package:BRT/widgets/ticketformwidgets/vehiclesection.dart';
 import 'package:BRT/widgets/utilityWidgets.dart';
 
 import 'package:flutter/material.dart';
+
+import 'package:image_picker_gallery_camera/image_picker_gallery_camera.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../main.dart';
@@ -107,6 +110,54 @@ class _FineTicketState extends State<FineTicket> {
     super.initState();
   }
 
+  // File _image;
+
+  // File _camera;
+
+  // Future getImage() async {
+  //   final image = await ImagePicker.pickImage(source: ImageSource.gallery);
+  //   setState(() {
+  //     _image = image;
+  //   });
+  // }
+
+  // Future getCamera() async {
+  //   final camera = await ImagePicker().getImage(source: ImageSource.camera);
+  //   // setState(() {
+  //   //   _camera = camera;
+  //   // });
+  // }
+
+  var _image;
+  Future getImage(ImgSource source) async {
+    var image = await ImagePickerGC.pickImage(
+        // enableCloseButton: true,
+        // closeIcon: Icon(
+        //   Icons.close,
+        //   color: Colors.red,
+        //   size: 12,
+        // ),
+        context: context,
+        source: source,
+        barrierDismissible: true,
+        cameraIcon: Icon(Icons.camera_alt, color: Colors.orange),
+        galleryIcon: Icon(
+          Icons.photo,
+          color: Colors.green,
+        ), //cameraIcon and galleryIcon can change. If no icon provided default icon will be present
+        cameraText: Text(
+          "From Camera",
+          style: TextStyle(color: Colors.black),
+        ),
+        galleryText: Text(
+          "From Gallery",
+          style: TextStyle(color: Colors.black),
+        ));
+    setState(() {
+      _image = image;
+    });
+  }
+
   saveFineTicket() async {
     setState(() {
       _isLoading = true;
@@ -191,6 +242,7 @@ class _FineTicketState extends State<FineTicket> {
       'checkPost': checkPost,
       'fine': ticket.fine[0].fineamout,
       'time': entryTimeController.text,
+      'date': dateController.text,
       // 'fine':getAllFine(ticket.fine),
       'violation': violations,
       'isFineTicket': true
@@ -349,6 +401,18 @@ class _FineTicketState extends State<FineTicket> {
                         ],
                       ),
                     ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        BrtButton(
+                            title: "Image",
+                            onPressed: () => getImage(ImgSource.Both)),
+
+                        // BrtButton(title: "camera", onPressed: ),
+                      ],
+                    ),
+                    widgetSeperator(),
+                    widgetSeperator(),
                     DriverDetailsSection(
                         driverNameController: driverNameController,
                         driverMobileController: driverMobileController),
@@ -375,7 +439,8 @@ class _FineTicketState extends State<FineTicket> {
                       height: MediaQuery.of(context).size.height * 0.02,
                     ),
                     BrtButton(
-                        title: "Save & Print Ticket", onPressed: saveFineTicket)
+                        title: "Save & Print Ticket",
+                        onPressed: saveFineTicket),
                   ],
                 ),
               ),

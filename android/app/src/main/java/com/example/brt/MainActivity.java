@@ -64,6 +64,7 @@ public class MainActivity extends FlutterActivity {
 
     private String name;
     private String time;
+    private String date;
     private String number;
     private boolean isFineTicket = false;
     private String phoneNumber;
@@ -102,9 +103,9 @@ public class MainActivity extends FlutterActivity {
                                 mPrinter.selectPrinter(MainActivity.this);
                             } else if (call.method.equals("print")) {
                                 mPrinter.connectToPrinter();
-
                                 name = call.argument("Name");
                                 time = call.argument("time");
+                                date = call.argument("date");
                                 number = call.argument("number");
                                 isFineTicket = call.argument("isFineTicket");
                                 phoneNumber = call.argument("phone");
@@ -285,9 +286,10 @@ public class MainActivity extends FlutterActivity {
                 mPrinter.printTextLine("Name          : " + name + "\n");
                 mPrinter.printTextLine("Phone Number  : " + phoneNumber + "\n");
                 mPrinter.printTextLine("Ticket Number : " + number + "\n");
-                mPrinter.printTextLine("Entry Time    : " + time + "\n");
+                mPrinter.printTextLine("Date          : " + time + "\n");
+                mPrinter.printTextLine("Time          : " + time + "\n");
                 // mPrinter.printTextLine("Ticket Number : " + number + "\n");
-                mPrinter.printTextLine("Check Post    : " + checkPost + "\n");
+                mPrinter.printTextLine("Road          : " + checkPost + "\n");
                 mPrinter.printTextLine("Violation     : " + violation + "\n");
                 mPrinter.printTextLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
                 mPrinter.setAlignmentCenter();
@@ -295,7 +297,7 @@ public class MainActivity extends FlutterActivity {
                 mPrinter.printTextLine("Rs " + fine + " Fine \n");
                 mPrinter.setBoldOff();
                 mPrinter.printTextLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-                mPrinter.printTextLine("\nAs per the K F ACT 1963 and WP ACT1972\n");
+                mPrinter.printTextLine("\nAs per O.M No. PCCF(WL)/B2/CR-24/2017-18\n");
                 mPrinter.setAlignmentCenter();
                 mPrinter.printLineFeed();
                 mPrinter.printLineFeed();
