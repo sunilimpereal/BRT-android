@@ -10,7 +10,7 @@ import 'package:intl/intl.dart';
 import '../strings.dart';
 
 String getFormattedDate(DateTime date) {
-  return DateFormat.yMd().format(date);
+  return DateFormat('dd-MM-yyyy').format(date);
 }
 
 String getFormattedTime(DateTime dateTime) {

@@ -4,8 +4,9 @@ class Fine {
   List<dynamic> fineId;
   String fineamout;
   String ticketId;
+  String utrId;
 
-  Fine({this.fineId, this.fineamout, this.ticketId});
+  Fine({this.fineId, this.fineamout, this.ticketId,this.utrId});
 
   Map<String, dynamic> toMap() {
     return {

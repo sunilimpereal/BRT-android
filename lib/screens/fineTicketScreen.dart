@@ -51,7 +51,8 @@ class _FineTicketState extends State<FineTicket> {
       driverMobileController,
       numberOfTravelersController,
       stateTextController,
-      fineController;
+      fineController,
+      utrNumberController;
   int selectedStayStatus = 0;
   String vehicleType;
   String selectedFine;
@@ -75,6 +76,7 @@ class _FineTicketState extends State<FineTicket> {
     numberOfTravelersController = TextEditingController();
     stateTextController = TextEditingController();
     fineController = TextEditingController();
+    utrNumberController = TextEditingController();
     ticketNumberController.text = await getTicketNumber();
     ticketVM = TicketViewModel(accessToken);
 
@@ -183,6 +185,9 @@ class _FineTicketState extends State<FineTicket> {
         fine: [
           Fine(
             fineamout: fineController.text,
+            utrId: utrNumberController.text == ''
+                ? null
+                : utrNumberController.text,
             //   ticketId: ticketNumberController.text,
             fineId:
                 selectedViolations, //fineID[fines.indexOf(selectedFine)].toString(),
@@ -245,7 +250,8 @@ class _FineTicketState extends State<FineTicket> {
       'date': dateController.text,
       // 'fine':getAllFine(ticket.fine),
       'violation': violations,
-      'isFineTicket': true
+      'isFineTicket': true,
+      'utrId':ticket.fine[0].utrId
     };
 
     //
@@ -258,6 +264,7 @@ class _FineTicketState extends State<FineTicket> {
   }
 
   Printer printer;
+  bool payment = false;
 
   @override
   Widget build(BuildContext context) {
@@ -325,79 +332,52 @@ class _FineTicketState extends State<FineTicket> {
                             style: SubHeadingTextStyle,
                           ),
                           widgetSeperator(),
-                          Stack(
-                            children: [
-                              Container(
-                                width: MediaQuery.of(context).size.width,
-                                // height:
-                                //     MediaQuery.of(context).size.height * 0.23,
-                                child: SingleChildScrollView(
-                                  controller: scrollController,
-                                  scrollDirection: Axis.horizontal,
-                                  child: Row(
-                                    children: List.generate(
-                                        fines.length,
-                                        (index) => Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: BRTCheckBox(
-                                                icon: fineIcons[index],
-                                                isSelected:
-                                                    violationCheckStatus[index],
-                                                onChanged: (isSelected) {
-                                                  if (isSelected) {}
-                                                  setState(() {
-                                                    violationCheckStatus[
-                                                            index] =
-                                                        isSelected
-                                                            ? false
-                                                            : true;
-                                                    String selected = fineID[
-                                                            fines.indexOf(
-                                                                fines[index])]
-                                                        .toString();
+                          Container(
+                              width: MediaQuery.of(context).size.width,
+                              // height:
+                              //     MediaQuery.of(context).size.height * 0.23,
+                              child: GridView.count(
+                                crossAxisCount: 3,
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
 
-                                                    if (selectedViolations
-                                                        .contains(selected)) {
-                                                      selectedViolations
-                                                          .remove(selected);
-                                                    } else {
-                                                      selectedViolations
-                                                          .add(selected);
-                                                    }
-                                                  });
-                                                },
-                                                title: fines[index],
-                                              ),
-                                            )),
-                                  ),
-                                ),
-                              ),
-                              Row(
-                                mainAxisAlignment: sc == 0
-                                    ? MainAxisAlignment.end
-                                    : MainAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      color: Colors.white.withOpacity(0.2),
-                                      height: 120,
-                                      width: 30,
-                                      child: Center(
-                                          child: Icon(
-                                        sc == 1
-                                            ? Icons.arrow_back_ios
-                                            : Icons.arrow_forward_ios,
-                                        size: 40,
-                                        color: Colors.green.withOpacity(0.3),
-                                      )),
-                                    ),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
+                                childAspectRatio:
+                                    (MediaQuery.of(context).size.width /
+                                        MediaQuery.of(context).size.height *
+                                        1.25),
+
+                                //crossAxisAlignment: WrapCrossAlignment.start,
+                                children: List.generate(
+                                    fines.length,
+                                    (index) => Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: BRTCheckBox(
+                                            icon: fineIcons[index],
+                                            isSelected:
+                                                violationCheckStatus[index],
+                                            onChanged: (isSelected) {
+                                              if (isSelected) {}
+                                              setState(() {
+                                                violationCheckStatus[index] =
+                                                    isSelected ? false : true;
+                                                String selected = fineID[fines
+                                                        .indexOf(fines[index])]
+                                                    .toString();
+
+                                                if (selectedViolations
+                                                    .contains(selected)) {
+                                                  selectedViolations
+                                                      .remove(selected);
+                                                } else {
+                                                  selectedViolations
+                                                      .add(selected);
+                                                }
+                                              });
+                                            },
+                                            title: fines[index],
+                                          ),
+                                        )),
+                              )),
                         ],
                       ),
                     ),
@@ -433,6 +413,37 @@ class _FineTicketState extends State<FineTicket> {
                           title: "Fine amount",
                           controller: fineController,
                         ),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              "Payment",
+                              style: SubHeadingTextStyle,
+                            ),
+                            Checkbox(
+                              value: payment,
+                              activeColor:
+                                  Theme.of(context).colorScheme.primary,
+                              onChanged: (value) {
+                                setState(() {
+                                  payment = value;
+                                });
+                              },
+                            )
+                          ],
+                        ),
+                        widgetSeperator(),
+                        payment
+                            ? BrtFormField(
+                                textInputType: TextInputType.number,
+                                title: "UTR Number",
+                                controller: utrNumberController,
+                              )
+                            : Container(),
                       ],
                     ),
                     SizedBox(

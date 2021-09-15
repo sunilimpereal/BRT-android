@@ -72,6 +72,7 @@ public class MainActivity extends FlutterActivity {
     private String fine;
     private String violation;
     private String ticketContent;
+    private String utrId;
     public static final String STREAM = "printingStatus";
     EventChannel.EventSink mEventSink;
 
@@ -113,6 +114,7 @@ public class MainActivity extends FlutterActivity {
                                 violation = call.argument("violation");
                                 fine = call.argument("fine");
                                 ticketContent = call.argument("ticketMap");
+                                utrId = call.argument("utrId")
 
 
                                 // Toast.makeText(this, "Bluetooth Not Supported", Toast.LENGTH_SHORT).show();
@@ -286,7 +288,7 @@ public class MainActivity extends FlutterActivity {
                 mPrinter.printTextLine("Name          : " + name + "\n");
                 mPrinter.printTextLine("Phone Number  : " + phoneNumber + "\n");
                 mPrinter.printTextLine("Ticket Number : " + number + "\n");
-                mPrinter.printTextLine("Date          : " + time + "\n");
+                mPrinter.printTextLine("Date          : " + date + "\n");
                 mPrinter.printTextLine("Time          : " + time + "\n");
                 // mPrinter.printTextLine("Ticket Number : " + number + "\n");
                 mPrinter.printTextLine("Road          : " + checkPost + "\n");
@@ -295,6 +297,7 @@ public class MainActivity extends FlutterActivity {
                 mPrinter.setAlignmentCenter();
                 mPrinter.setBoldOn();
                 mPrinter.printTextLine("Rs " + fine + " Fine \n");
+                utrId==""?null: mPrinter.printTextLine("UTR Number     : " + utrId + "\n");
                 mPrinter.setBoldOff();
                 mPrinter.printTextLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
                 mPrinter.printTextLine("\nAs per O.M No. PCCF(WL)/B2/CR-24/2017-18\n");

@@ -109,15 +109,17 @@ class BRTCheckBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 100,
-      height: 180,
+     
       child: GestureDetector(
         onTap: () => onChanged(isSelected),
         child: SelectorTile(
             icon: icon,
             title: title,
             isSelected: isSelected,
-            firstWidget: Container()
+            firstWidget: Container(
+              height: 1,
+              width: 1,
+            )
             //  Checkbox(
             //   value: isSelected,
             //   onChanged: (x) => onChanged,
