@@ -114,7 +114,7 @@ public class MainActivity extends FlutterActivity {
                                 violation = call.argument("violation");
                                 fine = call.argument("fine");
                                 ticketContent = call.argument("ticketMap");
-                                utrId = call.argument("utrId")
+                                utrId = call.argument("utrId");
 
 
                                 // Toast.makeText(this, "Bluetooth Not Supported", Toast.LENGTH_SHORT).show();
@@ -297,9 +297,11 @@ public class MainActivity extends FlutterActivity {
                 mPrinter.setAlignmentCenter();
                 mPrinter.setBoldOn();
                 mPrinter.printTextLine("Rs " + fine + " Fine \n");
-                utrId==""?null: mPrinter.printTextLine("UTR Number     : " + utrId + "\n");
                 mPrinter.setBoldOff();
                 mPrinter.printTextLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+                if(!(utrId.equals(""))){
+                    mPrinter.printTextLine("UTR Number     : " + utrId + "\n");
+                }
                 mPrinter.printTextLine("\nAs per O.M No. PCCF(WL)/B2/CR-24/2017-18\n");
                 mPrinter.setAlignmentCenter();
                 mPrinter.printLineFeed();

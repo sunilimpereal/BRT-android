@@ -345,69 +345,69 @@ class _DashboardState extends State<Dashboard>
                                     ? Text("Last Sync at $lastSyncTime")
                                     : Container(),
                               ),
-                              // Stack(children: [
-                              //   Container(
-                              //     decoration: BoxDecoration(
-                              //       borderRadius: BorderRadius.circular(10),
-                              //       color: BRTbrown,
-                              //     ),
-                              //     padding: GlobalScreenPadding,
-                              //     child: Row(
-                              //       children: [
-                              //         Padding(
-                              //           padding: const EdgeInsets.all(8.0),
-                              //           child: Container(
-                              //               padding: EdgeInsets.all(10),
-                              //               decoration: BoxDecoration(
-                              //                   color: BrtMediumBrown,
-                              //                   borderRadius:
-                              //                       BorderRadius.circular(10)),
-                              //               child: Image.asset(
+                              Stack(children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: BRTbrown,
+                                  ),
+                                  padding: GlobalScreenPadding,
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                            padding: EdgeInsets.all(10),
+                                            decoration: BoxDecoration(
+                                                color: BrtMediumBrown,
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                            child: Image.asset(
                                               
-                              //                 assetsDirectory +
-                              //                   "VehicleCountIcon.png",color: Theme.of(context).colorScheme.primary,)),
-                              //         ),
-                              //         Column(
-                              //             crossAxisAlignment:
-                              //                 CrossAxisAlignment.start,
-                              //             children: [
-                              //               Text(
-                              //                 snapshot.data.vehicleInside ?? "",
-                              //                 style: TextStyle(
-                              //                     fontSize: 35,
-                              //                     color: BrtWhite),
-                              //               ),
-                              //               Row(
-                              //                 mainAxisAlignment:
-                              //                     MainAxisAlignment
-                              //                         .spaceBetween,
-                              //                 children: [
-                              //                   Text(
-                              //                     "Vehicles Inside",
-                              //                     style: TextStyle(
-                              //                         color: BrtWhite),
-                              //                   ),
-                              //                 ],
-                              //               )
-                              //             ])
-                              //       ],
-                              //     ),
-                              //   ),
-                              //   Positioned(
-                              //       bottom: 10,
-                              //       right: 10,
-                              //       child: GestureDetector(
-                              //         onTap: onVehicleCardTapped,
-                              //         child: Container(
-                              //           padding: EdgeInsets.all(10),
-                              //           child: Image.asset(
-                              //             assetsDirectory + "NextIcon.png",
-                              //             scale: 0.6,
+                                              assetsDirectory +
+                                                "VehicleCountIcon.png",color: Theme.of(context).colorScheme.primary,)),
+                                      ),
+                                      Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              snapshot.data.vehicleInside ?? "",
+                                              style: TextStyle(
+                                                  fontSize: 35,
+                                                  color: BrtWhite),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "Vehicles Inside",
+                                                  style: TextStyle(
+                                                      color: BrtWhite),
+                                                ),
+                                              ],
+                                            )
+                                          ])
+                                    ],
+                                  ),
+                                ),
+                                Positioned(
+                                    bottom: 10,
+                                    right: 10,
+                                    child: GestureDetector(
+                                      onTap: onVehicleCardTapped,
+                                      child: Container(
+                                        padding: EdgeInsets.all(10),
+                                        child: Image.asset(
+                                          assetsDirectory + "NextIcon.png",
+                                          scale: 0.6,
                                           
-                              //           ),
-                              //         ),
-                              //       ))
-                              // ]),
+                                        ),
+                                      ),
+                                    ))
+                              ]),
                               widgetSeperator(),
                               widgetSeperator(),
                               // MenuTile(
@@ -452,39 +452,39 @@ class _DashboardState extends State<Dashboard>
                                   }
                                 },
                               ),
-                              // MenuTile(
-                              //     title: "Scan a ticket",
-                              //     subtitle: "Scan for exit or fine",
-                              //     buttonText: "Scan",
-                              //     icon: assetsDirectory + "ScanIcon.png",
-                              //     onPressed: () async {
-                              //       String barCodeResult = //"37";
-                              //           await FlutterBarcodeScanner.scanBarcode(
-                              //               "#ff6666",
-                              //               "Cancel",
-                              //               true,
-                              //               ScanMode.DEFAULT);
-                              //       if (barCodeResult != null &&
-                              //           barCodeResult != "-1") {
-                              //         final qrInfo = getQrInfo(barCodeResult);
-                              //         Navigator.pushNamed(
-                              //             context, TicketInfoRoute,
-                              //             arguments: TicketInfoArguments(
-                              //                 ticket: qrInfo));
-                              //       }
-                              //     }),
-                              // GestureDetector(
-                              //     onTap: () async {
-                              //       await Navigator.pushNamed(
-                              //           context, TicketHistoryRoute,
-                              //           arguments: false);
-                              //       if (isDeviceOnline) {
-                              //         syncDataWithBackEnd();
-                              //       } else {
-                              //         initLocalSync();
-                              //       }
-                              //     },
-                              //     child: UnderLineButton("View all tickets")),
+                              MenuTile(
+                                  title: "Scan a ticket",
+                                  subtitle: "Scan for exit or fine",
+                                  buttonText: "Scan",
+                                  icon: assetsDirectory + "ScanIcon.png",
+                                  onPressed: () async {
+                                    String barCodeResult = //"37";
+                                        await FlutterBarcodeScanner.scanBarcode(
+                                            "#ff6666",
+                                            "Cancel",
+                                            true,
+                                            ScanMode.DEFAULT);
+                                    if (barCodeResult != null &&
+                                        barCodeResult != "-1") {
+                                      final qrInfo = getQrInfo(barCodeResult);
+                                      Navigator.pushNamed(
+                                          context, TicketInfoRoute,
+                                          arguments: TicketInfoArguments(
+                                              ticket: qrInfo));
+                                    }
+                                  }),
+                              GestureDetector(
+                                  onTap: () async {
+                                    await Navigator.pushNamed(
+                                        context, TicketHistoryRoute,
+                                        arguments: false);
+                                    if (isDeviceOnline) {
+                                      syncDataWithBackEnd();
+                                    } else {
+                                      initLocalSync();
+                                    }
+                                  },
+                                  child: UnderLineButton("View all tickets")),
                             ],
                           ),
                         );
