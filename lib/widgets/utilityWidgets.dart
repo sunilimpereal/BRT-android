@@ -58,7 +58,7 @@ class _BrtTextFieldState extends State<BrtTextField> {
       keyboardType: widget.keyboardType ?? TextInputType.text,
       obscureText: widget.isObsecure,
       maxLength: widget.maxLength,
-      autovalidate: false,
+      // autovalidate: false,
       maxLengthEnforced: true,
       textCapitalization: widget.capitalization,
       validator: (String text) {
@@ -70,8 +70,7 @@ class _BrtTextFieldState extends State<BrtTextField> {
       },
       cursorColor: BRTbrown,
       decoration: InputDecoration(
-        prefixIcon:
-            !fine ? (widget.icon != null ? Icon(widget.icon) : null) : rupee(),
+        prefixIcon: !fine ? (widget.icon != null ? Icon(widget.icon) : null) : rupee(),
         labelStyle: TextStyle(fontSize: 12, color: BRTbrown),
         focusColor: BRTbrown,
         fillColor: BRTlightBrown,

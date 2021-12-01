@@ -421,7 +421,7 @@ class _FineTicketState extends State<FineTicket> {
                         Row(
                           children: [
                             Text(
-                              "Payment",
+                              "UPI/Online",
                               style: SubHeadingTextStyle,
                             ),
                             Checkbox(
@@ -439,7 +439,7 @@ class _FineTicketState extends State<FineTicket> {
                         widgetSeperator(),
                         payment
                             ? BrtFormField(
-                                textInputType: TextInputType.number,
+                                textInputType: TextInputType.text,
                                 title: "UTR Number",
                                 controller: utrNumberController,
                               )

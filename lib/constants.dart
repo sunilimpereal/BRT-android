@@ -1,10 +1,9 @@
-import 'package:BRT/screens/entryTicket.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 
 //utility Contants
-const BackendBaseUrl = "https://brt.codemonk.in/api/v1/";
+// const BackendBaseUrl = "https://brt.codemonk.in/api/v1/";
+const BackendBaseUrl = "http://ntr.afroaves.com:8082/api/v1/";
 const assetsDirectory = "assets/images/";
 const CHANNEL = 'brother/print';
 // Color Constants
@@ -22,22 +21,23 @@ const BrtMediumBrown = Color(0xFF342727);
 const BrtdisabledBrown = Color(0xFFA49898);
 
 // Routing constants
-const LoginRoute = "login";
-const DashBoardRoute = "dashboard";
-const EntryTicketRoute = "entry";
-const FineTicketRoute = "fine";
-const SplashRoute = "splash";
+const LoginRoute          = "login";
+const DashBoardRoute      = "dashboard";
+const EntryTicketRoute    = "entry";
+const FineTicketRoute     = "fine";
+const SplashRoute         = "splash";
 const AuthenticationRoute = "authenticate";
-const TicketInfoRoute = "ticketInfo";
-const TicketHistoryRoute = "ticketHistory";
+const TicketInfoRoute     = "ticketInfo";
+const TicketHistoryRoute  = "ticketHistory";
 
 // Style Constants
 const headingTextStyle = TextStyle(
-    fontSize: 18,
-    color: BRTbrown,
-    fontFamily: "Montserrat",
-    fontWeight: FontWeight.w700);
-const SubHeadingTextStyle =
-    TextStyle(fontSize: 19, color: Brtblack, fontWeight: FontWeight.w600);
+  fontSize: 18,
+  color: BRTbrown,
+  fontFamily: "Montserrat",
+  fontWeight: FontWeight.w700,
+);
+const SubHeadingTextStyle = TextStyle(fontSize: 19, color: Brtblack, fontWeight: FontWeight.w600);
 
 const TimeOutDuration = Duration(seconds: 2);
+

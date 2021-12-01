@@ -24,7 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.0
-  flutter_barcode_scanner: ^1.0.1
+  # flutter_barcode_scanner: ^1.0.1
   flutter_launcher_icons: ^0.8.1
   http: ^0.12.2
   intl: ^0.16.1

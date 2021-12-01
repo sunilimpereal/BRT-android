@@ -12,6 +12,8 @@ import 'package:BRT/screens/ticketinfo.dart';
 import 'package:BRT/services/printer.dart';
 import 'package:BRT/services/utilityFunctions.dart';
 import 'package:BRT/services/variables.dart';
+import 'package:BRT/trip/end_trip_screen.dart';
+import 'package:BRT/trip/start_trip_screen.dart';
 import 'package:BRT/viewmodels/authentication.dart';
 import 'package:BRT/viewmodels/checkpostviewmodel.dart';
 import 'package:BRT/viewmodels/ticketviewmodel.dart';
@@ -22,7 +24,6 @@ import 'package:BRT/widgets/utilityWidgets.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -33,8 +34,7 @@ class Dashboard extends StatefulWidget {
   _DashboardState createState() => _DashboardState();
 }
 
-class _DashboardState extends State<Dashboard>
-    with SingleTickerProviderStateMixin {
+class _DashboardState extends State<Dashboard> with SingleTickerProviderStateMixin {
   bool _isLoading = false;
   TicketViewModel ticketVM;
 
@@ -60,8 +60,8 @@ class _DashboardState extends State<Dashboard>
         }
         // setState(() {}); // DONT DO THIS
       });
-    syncAnimation = Tween<double>(begin: 1, end: 4).animate(
-        new CurvedAnimation(parent: syncController, curve: Curves.linear));
+    syncAnimation = Tween<double>(begin: 1, end: 4)
+        .animate(new CurvedAnimation(parent: syncController, curve: Curves.linear));
 
     getSyncTime();
   }
@@ -90,8 +90,7 @@ class _DashboardState extends State<Dashboard>
     syncController.forward();
     final List a = await entryDao.getAllEntryTickets();
     final List fineTicket = await fineDao.getAllFineTickets();
-    final List raisedFineTickets =
-        await raisedFineDao.getAllRaisedFineTickets();
+    final List raisedFineTickets = await raisedFineDao.getAllRaisedFineTickets();
     if (a.isNotEmpty) {
       for (EntryTicketModel ticket in a) {
         final response = await ticketVM.updateTicket(
@@ -173,14 +172,9 @@ class _DashboardState extends State<Dashboard>
 
       ticketCount = TicketCountModel(
           vehicleInside:
-              (int.parse(temp.vehicleInside) + int.parse(temp2.vehicleInside))
-                  .toString(),
-          entryTickets:
-              (int.parse(temp.entryTickets) + int.parse(temp2.entryTickets))
-                  .toString(),
-          fineTickets:
-              (int.parse(temp.fineTickets) + int.parse(temp2.fineTickets))
-                  .toString());
+              (int.parse(temp.vehicleInside) + int.parse(temp2.vehicleInside)).toString(),
+          entryTickets: (int.parse(temp.entryTickets) + int.parse(temp2.entryTickets)).toString(),
+          fineTickets: (int.parse(temp.fineTickets) + int.parse(temp2.fineTickets)).toString());
       // }
     } else {
       final states = await ticketVM.getStatesList();
@@ -207,8 +201,7 @@ class _DashboardState extends State<Dashboard>
         }
       }
 
-      final checkposts =
-          await CheckPostViewModel(accessToken).getCheckPostList();
+      final checkposts = await CheckPostViewModel(accessToken).getCheckPostList();
       availableCheckPost = checkposts;
       if (await dropDownDataDao.isCheckPostDataEmpty()) {
         for (var cp in checkposts) {
@@ -263,8 +256,7 @@ class _DashboardState extends State<Dashboard>
                               Container(
                                 padding: EdgeInsets.all(10),
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Image.asset(
                                       assetsDirectory + "LogoIcon.png",
@@ -302,8 +294,7 @@ class _DashboardState extends State<Dashboard>
                                                   animation: syncAnimation,
                                                   builder: (context, child) {
                                                     return Transform.rotate(
-                                                        angle:
-                                                            syncAnimation.value,
+                                                        angle: syncAnimation.value,
                                                         child: Icon(
                                                           Icons.sync,
                                                           color: BRTbrown,
@@ -315,20 +306,14 @@ class _DashboardState extends State<Dashboard>
                                             flex: 1,
                                             child: GestureDetector(
                                                 onTap: () {
-                                                  Navigator.pushNamed(
-                                                      context, TicketInfoRoute);
-                                                  Provider.of<AuthenticationViewModel>(
-                                                          context,
+                                                  Navigator.pushNamed(context, TicketInfoRoute);
+                                                  Provider.of<AuthenticationViewModel>(context,
                                                           listen: false)
                                                       .logout();
-                                                  Navigator
-                                                      .pushNamedAndRemoveUntil(
-                                                          context,
-                                                          LoginRoute,
-                                                          (route) => false);
+                                                  Navigator.pushNamedAndRemoveUntil(
+                                                      context, LoginRoute, (route) => false);
                                                 },
-                                                child: Image.asset(
-                                                    "assets/images/LogoutIcon.png")),
+                                                child: Image.asset("assets/images/LogoutIcon.png")),
                                           ),
                                         ],
                                       ),
@@ -345,69 +330,69 @@ class _DashboardState extends State<Dashboard>
                                     ? Text("Last Sync at $lastSyncTime")
                                     : Container(),
                               ),
-                              Stack(children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: BRTbrown,
-                                  ),
-                                  padding: GlobalScreenPadding,
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Container(
-                                            padding: EdgeInsets.all(10),
-                                            decoration: BoxDecoration(
-                                                color: BrtMediumBrown,
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
-                                            child: Image.asset(
-                                              
-                                              assetsDirectory +
-                                                "VehicleCountIcon.png",color: Theme.of(context).colorScheme.primary,)),
-                                      ),
-                                      Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              snapshot.data.vehicleInside ?? "",
-                                              style: TextStyle(
-                                                  fontSize: 35,
-                                                  color: BrtWhite),
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  "Vehicles Inside",
-                                                  style: TextStyle(
-                                                      color: BrtWhite),
-                                                ),
-                                              ],
-                                            )
-                                          ])
-                                    ],
-                                  ),
-                                ),
-                                Positioned(
-                                    bottom: 10,
-                                    right: 10,
-                                    child: GestureDetector(
-                                      onTap: onVehicleCardTapped,
-                                      child: Container(
-                                        padding: EdgeInsets.all(10),
-                                        child: Image.asset(
-                                          assetsDirectory + "NextIcon.png",
-                                          scale: 0.6,
-                                          
-                                        ),
-                                      ),
-                                    ))
-                              ]),
+                              // Stack(children: [
+                              //   Container(
+                              //     decoration: BoxDecoration(
+                              //       borderRadius: BorderRadius.circular(10),
+                              //       color: BRTbrown,
+                              //     ),
+                              //     padding: GlobalScreenPadding,
+                              //     child: Row(
+                              //       children: [
+                              //         Padding(
+                              //           padding: const EdgeInsets.all(8.0),
+                              //           child: Container(
+                              //               padding: EdgeInsets.all(10),
+                              //               decoration: BoxDecoration(
+                              //                   color: BrtMediumBrown,
+                              //                   borderRadius:
+                              //                       BorderRadius.circular(10)),
+                              //               child: Image.asset(
+
+                              //                 assetsDirectory +
+                              //                   "VehicleCountIcon.png",color: Theme.of(context).colorScheme.primary,)),
+                              //         ),
+                              //         Column(
+                              //             crossAxisAlignment:
+                              //                 CrossAxisAlignment.start,
+                              //             children: [
+                              //               Text(
+                              //                 snapshot.data.vehicleInside ?? "",
+                              //                 style: TextStyle(
+                              //                     fontSize: 35,
+                              //                     color: BrtWhite),
+                              //               ),
+                              //               Row(
+                              //                 mainAxisAlignment:
+                              //                     MainAxisAlignment
+                              //                         .spaceBetween,
+                              //                 children: [
+                              //                   Text(
+                              //                     "Vehicles Inside",
+                              //                     style: TextStyle(
+                              //                         color: BrtWhite),
+                              //                   ),
+                              //                 ],
+                              //               )
+                              //             ])
+                              //       ],
+                              //     ),
+                              //   ),
+                              //   Positioned(
+                              //       bottom: 10,
+                              //       right: 10,
+                              //       child: GestureDetector(
+                              //         onTap: onVehicleCardTapped,
+                              //         child: Container(
+                              //           padding: EdgeInsets.all(10),
+                              //           child: Image.asset(
+                              //             assetsDirectory + "NextIcon.png",
+                              //             scale: 0.6,
+
+                              //           ),
+                              //         ),
+                              //       ))
+                              // ]),
                               widgetSeperator(),
                               widgetSeperator(),
                               // MenuTile(
@@ -433,14 +418,12 @@ class _DashboardState extends State<Dashboard>
                               // ),
                               MenuTile(
                                 title: "Make fine ticket",
-                                subtitle: snapshot.data.fineTickets +
-                                    " fine tickets made",
+                                subtitle: snapshot.data.fineTickets + " fine tickets made",
                                 buttonText: "Add",
                                 icon: assetsDirectory + "FineTicketIcon.png",
                                 onPressed: () async {
                                   try {
-                                    await Navigator.pushNamed(
-                                            context, FineTicketRoute)
+                                    await Navigator.pushNamed(context, FineTicketRoute)
                                         .timeout(TimeOutDuration);
                                     if (isDeviceOnline) {
                                       syncDataWithBackEnd();
@@ -453,30 +436,57 @@ class _DashboardState extends State<Dashboard>
                                 },
                               ),
                               MenuTile(
-                                  title: "Scan a ticket",
-                                  subtitle: "Scan for exit or fine",
-                                  buttonText: "Scan",
-                                  icon: assetsDirectory + "ScanIcon.png",
-                                  onPressed: () async {
-                                    String barCodeResult = //"37";
-                                        await FlutterBarcodeScanner.scanBarcode(
-                                            "#ff6666",
-                                            "Cancel",
-                                            true,
-                                            ScanMode.DEFAULT);
-                                    if (barCodeResult != null &&
-                                        barCodeResult != "-1") {
-                                      final qrInfo = getQrInfo(barCodeResult);
-                                      Navigator.pushNamed(
-                                          context, TicketInfoRoute,
-                                          arguments: TicketInfoArguments(
-                                              ticket: qrInfo));
-                                    }
-                                  }),
+                                title: "Start Trip",
+                                subtitle: "",
+                                buttonText: "Start",
+                                icon: assetsDirectory + "FineTicketIcon.png",
+                                onPressed: () async {
+                                  try {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(builder: (context) => StartTripScreen()));
+                                  } on TimeoutException catch (_) {
+                                    print(_);
+                                  }
+                                },
+                              ),
+                              MenuTile(
+                                title: "End Trip",
+                                subtitle: "",
+                                buttonText: "End",
+                                icon: assetsDirectory + "FineTicketIcon.png",
+                                onPressed: () async {
+                                  try {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(builder: (context) => EndTripScreen()));
+                                  } on TimeoutException catch (_) {
+                                    print(_);
+                                  }
+                                },
+                              ),
+                              // MenuTile(
+                              //     title: "Scan a ticket",
+                              //     subtitle: "Scan for exit or fine",
+                              //     buttonText: "Scan",
+                              //     icon: assetsDirectory + "ScanIcon.png",
+                              //     onPressed: () async {
+                              //       String barCodeResult = //"37";
+                              //           await FlutterBarcodeScanner.scanBarcode(
+                              //               "#ff6666",
+                              //               "Cancel",
+                              //               true,
+                              //               ScanMode.DEFAULT);
+                              //       if (barCodeResult != null &&
+                              //           barCodeResult != "-1") {
+                              //         final qrInfo = getQrInfo(barCodeResult);
+                              //         Navigator.pushNamed(
+                              //             context, TicketInfoRoute,
+                              //             arguments: TicketInfoArguments(
+                              //                 ticket: qrInfo));
+                              //       }
+                              //     }),
                               GestureDetector(
                                   onTap: () async {
-                                    await Navigator.pushNamed(
-                                        context, TicketHistoryRoute,
+                                    await Navigator.pushNamed(context, TicketHistoryRoute,
                                         arguments: false);
                                     if (isDeviceOnline) {
                                       syncDataWithBackEnd();

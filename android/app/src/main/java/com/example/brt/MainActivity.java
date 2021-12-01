@@ -299,9 +299,15 @@ public class MainActivity extends FlutterActivity {
                 mPrinter.printTextLine("Rs " + fine + " Fine \n");
                 mPrinter.setBoldOff();
                 mPrinter.printTextLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-                if(!(utrId.equals(""))){
+                if((utrId !=null)){
+                    mPrinter.printLineFeed();
                     mPrinter.printTextLine("UTR Number     : " + utrId + "\n");
+                     mPrinter.printLineFeed();
+                    mPrinter.printTextLine("******************************\n");
+                }else{
+                  
                 }
+
                 mPrinter.printTextLine("\nAs per O.M No. PCCF(WL)/B2/CR-24/2017-18\n");
                 mPrinter.setAlignmentCenter();
                 mPrinter.printLineFeed();
