@@ -218,7 +218,7 @@ class _StartTripScreenState extends State<StartTripScreen> {
                           height: 8,
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center, 
                           children: [Text("$errorMsg")],
                         )
                       ],
@@ -230,6 +230,7 @@ class _StartTripScreenState extends State<StartTripScreen> {
   }
 
   bool validate() {
+    log("message");
     if (driverID.text.isNotEmpty &&
         naturalListId.text.isNotEmpty &&
         deviceID.text.isNotEmpty &&
