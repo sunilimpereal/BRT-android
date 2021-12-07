@@ -113,7 +113,7 @@ class TicketViewModel {
     final body = ticket.toMap();
     final response = await postRequest(
         accessToken: _accessToken,
-        api: "/fine-only-ticket/",
+        api: "fine-only-ticket/",
         body: body,
         successStatusCode: 201);
 

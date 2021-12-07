@@ -1,8 +1,11 @@
 import 'dart:developer';
 
+import 'package:BRT/trip/data/models/end_trip_request_model.dart';
+import 'package:BRT/trip/data/repository/trip_trpository.dart';
 import 'package:BRT/trip/trip_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 import 'start_trip_screen.dart';
 
@@ -14,12 +17,19 @@ class EndTripScreen extends StatefulWidget {
 }
 
 class _EndTripScreenState extends State<EndTripScreen> {
-  TextEditingController driverId = new TextEditingController();
-  FocusNode driverIDFocusNode = FocusNode();
-  TextEditingController naturalListId = new TextEditingController();
-  FocusNode naturalListIdFocusNode = FocusNode();
+  TextEditingController deviceId = new TextEditingController();
+  FocusNode deviceIdFocusNode = FocusNode();
+  String errorMsg = "";
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
+    if (errorMsg.isNotEmpty) {
+      Future.delayed(Duration(seconds: 5)).then((value) {
+        setState(() {
+          errorMsg = "";
+        });
+      });
+    }
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -47,20 +57,16 @@ class _EndTripScreenState extends State<EndTripScreen> {
           onKey: (event) {
             if (event.isKeyPressed(LogicalKeyboardKey.enter)) {
               setState(() {
-                if (driverIDFocusNode.hasFocus) {
-                  naturalListId.clear();
-                  naturalListIdFocusNode.requestFocus();
+                if (deviceIdFocusNode.hasFocus) {
                 } else {}
               });
             } else if (event.isKeyPressed(LogicalKeyboardKey.tab)) {
             } else {
-              if (event.character != null) {
+              if (event.character != null || !event.isKeyPressed(LogicalKeyboardKey.enter)) {
                 log(event.character);
                 setState(() {
-                  if (driverIDFocusNode.hasFocus) {
-                    driverId.text = driverId.text + event.character;
-                  } else if (naturalListIdFocusNode.hasFocus) {
-                    naturalListId.text = naturalListId.text + event.character;
+                  if (deviceIdFocusNode.hasFocus) {
+                    deviceId.text = deviceId.text + event.character;
                   }
                 });
               }
@@ -74,27 +80,27 @@ class _EndTripScreenState extends State<EndTripScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TripTextField(
-                      controller: driverId,
-                      focusNode: driverIDFocusNode,
+                      controller: deviceId,
+                      focusNode: deviceIdFocusNode,
                       onSubmitted: (value) {},
                       readOnly: true,
-                      hint: "Driver ID",
+                      hint: "Device ID",
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text("OR",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, color: Colors.grey, fontSize: 16)),
-                      ],
-                    ),
-                    TripTextField(
-                      controller: naturalListId,
-                      readOnly: true,
-                      focusNode: naturalListIdFocusNode,
-                      onSubmitted: (value) {},
-                      hint: "Natural List ID",
-                    ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: const [
+                    //     Text("OR",
+                    //         style: TextStyle(
+                    //             fontWeight: FontWeight.bold, color: Colors.grey, fontSize: 16)),
+                    //   ],
+                    // ),
+                    // TripTextField(
+                    //   controller: naturalListId,
+                    //   readOnly: true,
+                    //   focusNode: naturalListIdFocusNode,
+                    //   onSubmitted: (value) {},
+                    //   hint: "Natural List ID",
+                    // ),
                     const SizedBox(height: 40),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -106,11 +112,12 @@ class _EndTripScreenState extends State<EndTripScreen> {
                             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                           ),
                           const SizedBox(height: 20),
-                          text('Start Date & Time ', "12/11/2020 18:00"),
-                          text('Driver', "Driver Details"),
-                          text('Natural List', "Natural List Details"),
-                          text('Device', "Device Details"),
-                          text('Natural List', "Vehicle Details"),
+                          text('Date & Time ',
+                              DateFormat().addPattern("hh:mm dd/MM/yyyy").format(DateTime.now())),
+                          // text('Driver', "Driver Details"),
+                          // text('Natural List', "Natural List Details"),
+                          text('Device', "${deviceId.text}"),
+                          // text('Natural List', "Vehicle Details"),
                         ],
                       ),
                     ),
@@ -120,27 +127,73 @@ class _EndTripScreenState extends State<EndTripScreen> {
                     bottom: 20,
                     left: 0,
                     right: 0,
-                    child: button(
-                      name: "End Trip",
-                      onTap: () {
-                        if (valid()) {
-                          print('end trip');
-                        } else {
-                          print("incomplete");
-                        }
-                      },
-                    ))
+                    child: Column(
+                      children: [
+                        button(
+                          name: "End Trip",
+                          loading: loading,
+                          onTap: () {
+                            if (validate()) {
+                              setState(() {
+                                loading = true;
+                              });
+                              TripRepository()
+                                  .endTrip(
+                                      endTripRequestModel:
+                                          EndTripRequestModel(tripid: deviceId.text))
+                                  .then((value) {
+                                setState(() {
+                                  loading = false;
+                                });
+                                if (value == null) {
+                                  setState(() {
+                                    errorMsg = 'End Trip Failed';
+                                  });
+                                } else {
+                                  setState(() {
+                                    errorMsg = 'Trip Ended Successfully';
+                                  });
+                                }
+
+                                print('Trip Ended Successfully');
+                                clear();
+                              });
+                            } else {
+                              setState(() {
+                                loading = false;
+                              });
+                              setState(() {
+                                errorMsg = 'Please fill all the fields';
+                              });
+                            }
+                          },
+                        ),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [Text("$errorMsg")],
+                        )
+                      ],
+                    )),
               ],
             ),
           ),
         ));
   }
 
-  bool valid() {
-    if (driverId.text.isNotEmpty && naturalListId.text.isNotEmpty) {
+  bool validate() {
+    if (deviceId.text.isNotEmpty) {
       return true;
     } else {
       return false;
     }
+  }
+
+  clear() {
+    setState(() {
+      deviceId.clear();
+    });
   }
 }

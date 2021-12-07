@@ -151,11 +151,14 @@ Future<Response> postRequest(
     final response =
         await http.post(url, body: json.encode(body), headers: headers);
     decodedResponseBody = response.body;
+      log("api url : ${url}");
+      log("api url : ${response.body}");
     if (response.statusCode == successStatusCode) {
       didSucceed = true;
       message = 'Successful';
     } else {
       final body = json.decode(response.body.toString());
+
       if (body.values.first is List) {
         message = body.values.first.first;
       } else {

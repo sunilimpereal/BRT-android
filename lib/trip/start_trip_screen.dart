@@ -63,8 +63,7 @@ class _StartTripScreenState extends State<StartTripScreen> {
           focusNode: FocusNode(),
           autofocus: true,
           onKey: (event) {
-            if (!enterPressed&& event.isKeyPressed(LogicalKeyboardKey.enter)) {
-
+            if (event.isKeyPressed(LogicalKeyboardKey.enter)) {
               log("enter Pressed");
               setState(() {
                 enterPressed = true;
@@ -83,11 +82,9 @@ class _StartTripScreenState extends State<StartTripScreen> {
               });
             } else if (event.isKeyPressed(LogicalKeyboardKey.tab)) {
             } else {
-              if (event.character != null|| !event.isKeyPressed(LogicalKeyboardKey.enter)) {
-
-                log("event : "+event.data.toString());
+              if (event.character != null || !event.isKeyPressed(LogicalKeyboardKey.enter)) {
+                log("event : " + event.data.toString());
                 setState(() {
-                 
                   if (driverIDFocusNode.hasFocus) {
                     driverID.text = driverID.text + event.character;
                   } else if (driverIDFocusNode.hasFocus) {
@@ -194,20 +191,22 @@ class _StartTripScreenState extends State<StartTripScreen> {
                                   loading = false;
                                 });
                                 if (value == null) {
-                                    setState(() {
-                                  errorMsg = 'Trip Start Failed';
-                                });
+                                  setState(() {
+                                    errorMsg = 'Trip Start Failed';
+                                  });
+                                } else {
+                                  setState(() {
+                                    errorMsg = 'Trip Started Successfully';
+                                  });
                                 }
-                                setState(() {
-                                  errorMsg = 'Trip Started Successfully';
-                                });
+
                                 print('Trip Started Successfully');
                                 clear();
                               });
                             } else {
-                               setState(() {
-                                  loading = false;
-                                });
+                              setState(() {
+                                loading = false;
+                              });
                               setState(() {
                                 errorMsg = 'Please fill all the fields';
                               });
@@ -218,7 +217,7 @@ class _StartTripScreenState extends State<StartTripScreen> {
                           height: 8,
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.center, 
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [Text("$errorMsg")],
                         )
                       ],
